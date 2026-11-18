@@ -1,0 +1,15 @@
+{
+  "gmail.com": [
+    { "exchange": "gmail-smtp-in.l.google.com", "priority": 5 },
+    { "exchange": "alt1.gmail-smtp-in.l.google.com", "priority": 10 }
+  ],
+  "outlook.com": [
+    { "exchange": "outlook-com.olc.protection.outlook.com", "priority": 10 }
+  ],
+  "proton.me": [
+    { "exchange": "mail.protonmail.ch", "priority": 10 }
+  ],
+  "example.com": [
+    { "exchange": "mail.example.com", "priority": 10 }
+  ]
+}

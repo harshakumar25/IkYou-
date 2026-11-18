@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSINT Investigation Dossier - harshakumar25 [LP-GS56R21D]</title>
+  <style>
+    :root {
+      --bg: #0b0d13;
+      --card-bg: #141721;
+      --border: rgba(255,255,255,0.08);
+      --accent-cyan: #00e5ff;
+      --accent-green: #00e676;
+      --accent-gold: #ffd700;
+      --accent-red: #ff5252;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      padding: 32px 24px;
+    }
+    .dossier-wrapper { max-width: 1040px; margin: 0 auto; }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+    }
+    .header-title h1 { font-size: 26px; font-weight: 700; color: #fff; letter-spacing: -0.5px; }
+    .header-title .case-meta { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .print-actions button {
+      background: rgba(0,229,255,0.15);
+      color: var(--accent-cyan);
+      border: 1px solid rgba(0,229,255,0.3);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .print-actions button:hover { background: rgba(0,229,255,0.25); }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+    .kpi-num { font-size: 24px; font-weight: 700; color: var(--accent-cyan); }
+    .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-top: 4px; }
+    .section-title {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+      margin: 28px 0 12px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    th { background: rgba(255,255,255,0.03); padding: 12px 14px; color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: #cbd5e1; vertical-align: top; }
+    tr:last-child td { border-bottom: none; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-target { background: rgba(0,230,118,0.15); color: var(--accent-green); border: 1px solid rgba(0,230,118,0.3); }
+    .badge-verified { background: rgba(0,229,255,0.15); color: var(--accent-cyan); border: 1px solid rgba(0,229,255,0.3); }
+    .badge-homonym { background: rgba(255,82,82,0.15); color: var(--accent-red); border: 1px solid rgba(255,82,82,0.3); }
+    .badge-twin { background: rgba(255,215,0,0.15); color: var(--accent-gold); border: 1px solid rgba(255,215,0,0.3); }
+    .card-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    .detail-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .detail-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .avatar-thumb { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
+    .detail-bio { font-size: 12px; color: #cbd5e1; margin: 8px 0; background: rgba(0,0,0,0.2); padding: 8px 10px; border-radius: 6px; }
+    .forensic-box { margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 12px; }
+    .box-git { background: rgba(0,229,255,0.05); border: 1px solid rgba(0,229,255,0.2); }
+    .box-telecom { background: rgba(0,230,118,0.05); border: 1px solid rgba(0,230,118,0.2); }
+    .box-twin { background: rgba(255,215,0,0.05); border: 1px solid rgba(255,215,0,0.2); }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; background: rgba(255,255,255,0.06); padding: 2px 4px; border-radius: 3px; }
+    a { color: var(--accent-cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    @media print {
+      body { background: #ffffff !important; color: #1e293b !important; padding: 0 !important; }
+      .print-actions { display: none !important; }
+      .header-title h1 { color: #0f172a !important; }
+      .kpi-card, .table-container, .detail-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #0f172a !important;
+        page-break-inside: avoid;
+      }
+      th { background: #f8fafc !important; color: #475569 !important; border-bottom: 1px solid #cbd5e1 !important; }
+      td { border-bottom: 1px solid #e2e8f0 !important; color: #1e293b !important; }
+      .detail-bio, .forensic-box { background: #f8fafc !important; border-color: #e2e8f0 !important; color: #334155 !important; }
+      code { background: #f1f5f9 !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
+      a { color: #0284c7 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="dossier-wrapper">
+    <header class="header-bar">
+      <div class="header-title">
+        <h1>OSINT Forensic Investigation Dossier</h1>
+        <div class="case-meta">
+          <strong>Case:</strong> LP-GS56R21D &nbsp;|&nbsp;
+          <strong>Target Query:</strong> `harshakumar25` (USERNAME) &nbsp;|&nbsp;
+          <strong>Generated:</strong> Mon, 16 Nov 2026 04:12:59 GMT
+        </div>
+      </div>
+      <div class="print-actions">
+        <button onclick="window.print()">🖨️ Print / Save as PDF</button>
+      </div>
+    </header>
+
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">1</div>
+        <div class="kpi-label">Confirmed Profiles</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" style="color:var(--accent-green);">0</div>
+        <div class="kpi-label">Target Matches</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">0</div>
+        <div class="kpi-label">Platform Verified</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">0</div>
+        <div class="kpi-label">Recovered Emails</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">0</div>
+        <div class="kpi-label">Telecom Numbers</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num" style="color:var(--accent-gold);">0</div>
+        <div class="kpi-label">Visual Twins</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">4/100</div>
+        <div class="kpi-label">Exposure Score</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">📋 Confirmed Digital Accounts Matrix</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Platform</th>
+            <th>Handle</th>
+            <th>Display Name</th>
+            <th>Verdict / Match</th>
+            <th>Followers</th>
+            <th>Outlinks / Assets</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+              <tr>
+                <td><strong>Instagram</strong></td>
+                <td><code>@harshakumar25</code></td>
+                <td>Harsha Kumar</td>
+                <td><span class="badge" style="background:rgba(255,255,255,0.06);color:#94a3b8;">Public</span></td>
+                <td>-</td>
+                <td style="font-size:11px;">
+                  
+                  
+                  
+                  <div>Est. Reg: 2018</div>
+                </td>
+                <td><a href="https://instagram.com/harshakumar25" target="_blank" rel="noopener noreferrer">Open ↗</a></td>
+              </tr>
+            
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section-title">🔬 Deep Account Forensic Profiles</h2>
+    <div class="card-grid">
+      
+        <div class="detail-card">
+          <div class="detail-header">
+            
+            <div>
+              <div style="font-size:15px;font-weight:600;color:#fff;">
+                Harsha Kumar
+                <span style="font-size:12px;color:var(--text-muted);font-weight:normal;">(@harshakumar25)</span>
+                <span class="badge" style="margin-left:6px;background:rgba(255,255,255,0.08);color:#94a3b8;">Instagram</span>
+                <code style="margin-left:4px;">ID: 8652939026</code>
+                <span class="badge" style="background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3);margin-left:4px;">📅 Reg: 2018</span>
+              </div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                
+                Profile: <a href="https://instagram.com/harshakumar25" target="_blank">https://instagram.com/harshakumar25</a>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          
+        </div>
+      
+    </div>
+
+    <footer style="margin-top:40px;padding-top:16px;border-top:1px solid var(--border);text-align:center;font-size:11px;color:var(--text-muted);">
+      LocalFingerprint Edge Forensics Engine &bull; Non-authenticated passive OSINT verification &bull; Generated Mon, 16 Nov 2026 04:12:59 GMT
+    </footer>
+  </div>
+</body>
+</html>

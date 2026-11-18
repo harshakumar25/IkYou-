@@ -1,0 +1,14 @@
+From 4b825dc642cb6eb9a060e54bf8d69288fbee4904 Mon Sep 17 00:00:00 2001
+From: Harsha Kumar <harsha@example.com>
+Date: Sun, 15 Nov 2026 15:30:00 +0530
+Subject: [PATCH] Initial commit
+
+---
+ README.md | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..e69de29
+-- 
+2.39.2
